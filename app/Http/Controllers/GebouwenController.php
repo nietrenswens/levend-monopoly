@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gebouw;
 use Illuminate\Http\Request;
 
 class GebouwenController extends Controller
@@ -23,7 +24,7 @@ class GebouwenController extends Controller
      */
     public function create()
     {
-        //
+        return view('gebouwen.create');
     }
 
     /**
@@ -34,7 +35,11 @@ class GebouwenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $gebouw = new Gebouw;
+        $gebouw->naam = $request->gebouw_naam;
+        $gebouw->prijs = $request->gebouw_prijs;
+        $gebouw->save();
+        return redirect(route('management'));
     }
 
     /**
