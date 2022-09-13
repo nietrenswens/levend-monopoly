@@ -9,13 +9,15 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="grid grid-cols-3 space-x-4 ">
-                        <div class="bg-blue-400 text-center h-32 text-white font-bold text-xl">
-                            Voeg een team toe
-                        </div>
-                        <div class="flex items-center bg-red-400 text-center h-32 text-white font-bold text-xl">
-                            Verwijder een team
-                        </div>
+                    <div class="grid grid-cols-3 grid-rows-2 gap-y-4 gap-x-4 text-center">
+
+                        <a class="bg-blue-400 p-8 text-white font-semibold text-lg" href="#">Voeg een team toe</a>
+                        <a class="bg-orange-400 p-8 text-white font-semibold text-lg" href="#">Bewerk een team</a>
+                        <a class="bg-red-400 p-8 text-white font-semibold text-lg" href="#">Verwijder een team</a>
+
+                        <a class="bg-blue-400 p-8 text-white font-semibold text-lg" href="#">Voeg een gebouw toe</a>
+                        <a class="bg-orange-400 p-8 text-white font-semibold text-lg" href="#">Bewerk een gebouw</a>
+                        <a class="bg-red-400 p-8 text-white font-semibold text-lg" href="#">Verwijder een gebouw</a>
                     </div>
                 </div>
             </div>

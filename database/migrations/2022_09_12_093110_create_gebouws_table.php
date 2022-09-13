@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('gebouwen', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->int('price');
+            $table->integer('price');
             $table->boolean('belasting')->default(false);
             $table->timestamps();
         });
