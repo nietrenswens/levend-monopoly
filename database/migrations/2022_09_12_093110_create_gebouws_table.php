@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('gebouwen', function (Blueprint $table) {
             $table->id();
             $table->string('naam');
+            $table->string('uuid')->unique();
+            $table->integer('user_id');
             $table->integer('prijs');
             $table->boolean('belasting')->default(false);
             $table->timestamps();

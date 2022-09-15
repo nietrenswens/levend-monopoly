@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gebouw;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class ManagementController extends Controller
 {
-
-    $gebouwen = Gebouwen::get();
 
     public function index() {
         return view('management');
     }
 
     public function overview() {
-        return view('overview', compact(''));
+        $gebouwen = Gebouw::get();
+        return view('overview')->with(compact('gebouwen'));
     }
 
 }

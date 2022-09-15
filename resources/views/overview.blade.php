@@ -19,20 +19,22 @@
                                     <th scope="col" class="py-3 px-6">
                                         Prijs
                                     </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Actie
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($gebouwen as $gebouw)
-                                    
+                                    <tr class="bg-white border-b">
+                                        <th scope="row" class="py-4 px-6">
+                                            {{ $gebouw->naam }}
+                                        </th>
+                                        <td class="py-4 px-6">
+                                            &euro; {{ $gebouw->prijs }}
+                                        </td>
+                                    </tr>
                                 @endforeach
-                                <tr class="bg-white border-b">
-                                    <th scope="row" class="py-4 px-6">
-                                        
-                                    </th>
-                                    <td class="py-4 px-6">
-                                        
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>

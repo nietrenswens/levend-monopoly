@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gebouw;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class GebouwenController extends Controller
@@ -38,6 +39,7 @@ class GebouwenController extends Controller
         $gebouw = new Gebouw;
         $gebouw->naam = $request->gebouw_naam;
         $gebouw->prijs = $request->gebouw_prijs;
+        $gebouw->uuid = Str::random(40);
         $gebouw->save();
         return redirect(route('management'));
     }
