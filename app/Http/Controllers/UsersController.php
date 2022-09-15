@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -34,7 +38,13 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+        $user->name = $request->user_naam;
+        $user->email = $request->user_email;
+        $user->password = Hash::make($request->user_wachtwoord);
+        $user->role = "gebruiker";
+        $user->save();
+        return redirect(route('management'));
     }
 
     /**

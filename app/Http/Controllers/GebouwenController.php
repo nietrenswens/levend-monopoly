@@ -39,7 +39,10 @@ class GebouwenController extends Controller
         $gebouw = new Gebouw;
         $gebouw->naam = $request->gebouw_naam;
         $gebouw->prijs = $request->gebouw_prijs;
-        $gebouw->uuid = Str::random(40);
+        if(!$request->gebouw_uuid) 
+            $gebouw->uuid = Str::random(40); 
+        else 
+            $gebouw->uuid = $request->gebouw_uuid;
         $gebouw->save();
         return redirect(route('management'));
     }
@@ -88,4 +91,16 @@ class GebouwenController extends Controller
     {
         //
     }
+
+    /**
+     * Koop een gebouw
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function buy($id)
+    {
+        //
+    }
+
 }

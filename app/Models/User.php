@@ -52,4 +52,14 @@ class User extends Authenticatable
         return $this->role == 'admin';
         // return false;
      }
+
+     public function waarde(){
+        $gebouwen = $this->gebouwen;
+        $waarde = 0;
+        foreach($gebouwen as $gebouw) {
+            $waarde += $gebouw->prijs;
+        }
+        $waarde += $this->saldo;
+        return $waarde;
+     }
 }
