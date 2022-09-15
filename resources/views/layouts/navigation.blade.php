@@ -23,7 +23,7 @@
                         </x-nav-link>
                     @endif
 
-                    <x-nav-link :href="route('management')" :active="request()->routeIs('management')">
+                    <x-nav-link :href="route('overview')" :active="request()->routeIs('overview')">
                         Spel overzicht
                     </x-nav-link>
                 </div>
@@ -83,7 +83,7 @@
                 Spel management
             </x-responsive-nav-link>
             @endif
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('overview')" :active="request()->routeIs('overview')">
                 Spel overzicht
             </x-responsive-nav-link>
         </div>

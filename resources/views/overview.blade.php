@@ -10,6 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 text-center">
                     <div class="overflow-x-auto relative">
+                        <h2 class="text-lg pb-4">Gebouwen</h2>
                         <table class="w-full text-sm text-left">
                             <thead class="text-xs text-gray-700 uppercase">
                                 <tr>
@@ -20,7 +21,7 @@
                                         Prijs
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        Actie
+                                        Eigenaar
                                     </th>
                                 </tr>
                             </thead>
@@ -32,6 +33,13 @@
                                         </th>
                                         <td class="py-4 px-6">
                                             &euro; {{ $gebouw->prijs }}
+                                        </td>
+                                        <td class="py-4 px-6">
+                                            @if(!is_null($gebouw->user))
+                                                {{ $gebouw->user->name }}
+                                            @else
+                                                <span class="text-red-400">Geen eigenaar</span>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

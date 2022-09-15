@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('naam');
             $table->string('uuid')->unique();
-            $table->integer('user_id');
             $table->integer('prijs');
             $table->boolean('belasting')->default(false);
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('cascade')->constrained();
             $table->timestamps();
         });
     }

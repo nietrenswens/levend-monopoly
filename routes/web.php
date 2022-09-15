@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\GebouwenController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,8 +24,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::resource('/dashboard/users', UsersController::class)->middleware(['auth']);
+
 Route::get('/dashboard/management/', [ManagementController::class, 'index'])->middleware(['auth'])->name('management');
-Route::get('/dashboard/overview', [ManagementController::class, 'overview'])->middleware(['auth']);
+Route::get('/dashboard/overview', [ManagementController::class, 'overview'])->middleware(['auth'])->name('overview');
 
 Route::resource('/dashboard/gebouwen', GebouwenController::class)->middleware(['auth']);
 
