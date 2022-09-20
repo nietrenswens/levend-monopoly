@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('dashboard.index') }}">
                         <h2 class="text-gray-800 font-bold text-2xl py-4">
                             Levend Monopoly
                         </h2>
@@ -14,16 +14,16 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
                         Dashboard
                     </x-nav-link>
                     @if (auth()->user()->isAdministrator())
-                        <x-nav-link :href="route('management')" :active="request()->routeIs('management')">
+                        <x-nav-link :href="route('dashboard.management')" :active="request()->routeIs('dashboard.management')">
                             Spel management
                         </x-nav-link>
                     @endif
 
-                    <x-nav-link :href="route('overview')" :active="request()->routeIs('overview')">
+                    <x-nav-link :href="route('dashboard.overview')" :active="request()->routeIs('dashboard.overview')">
                         Spel overzicht
                     </x-nav-link>
                 </div>
@@ -74,16 +74,16 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard.index')">
                 Dashboard
             </x-responsive-nav-link>
             
             @if (auth()->user()->isAdministrator())
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('dashboard.management')" :active="request()->routeIs('dashboard.management')">
                 Spel management
             </x-responsive-nav-link>
             @endif
-            <x-responsive-nav-link :href="route('overview')" :active="request()->routeIs('overview')">
+            <x-responsive-nav-link :href="route('dashboard.overview')" :active="request()->routeIs('dashboard.overview')">
                 Spel overzicht
             </x-responsive-nav-link>
         </div>

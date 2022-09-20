@@ -17,7 +17,7 @@ class ManagementController extends Controller
     public function overview() {
         $gebouwen = Gebouw::get();
         $users = User::get();
-        return view('overview')->with(compact('gebouwen'))->with(compact('users'));
+        return view('overview')->with(compact('gebouwen', 'users'));
     }
 
 }

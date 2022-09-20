@@ -20,15 +20,18 @@ Route::get('/', function () {
     return view('index');
 })->middleware(['guest']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function() {
+    Route::get('/', function() {
+        return view('dashboard');
+    })->name('index');
 
-Route::resource('/dashboard/users', UsersController::class)->middleware(['auth']);
+    Route::get('/management/', [ManagementController::class, 'index'])->name('management');
 
-Route::get('/dashboard/management/', [ManagementController::class, 'index'])->middleware(['auth'])->name('management');
-Route::get('/dashboard/overview', [ManagementController::class, 'overview'])->middleware(['auth'])->name('overview');
+    Route::get('/overview', [ManagementController::class, 'overview'])->name('overview');
 
-Route::resource('/dashboard/gebouwen', GebouwenController::class)->middleware(['auth']);
+    Route::resource('/users', UsersController::class);
+
+    Route::resource('/gebouwen', GebouwenController::class);
+});
 
 require __DIR__.'/auth.php';
