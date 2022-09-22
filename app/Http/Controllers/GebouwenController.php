@@ -44,7 +44,7 @@ class GebouwenController extends Controller
         else 
             $gebouw->uuid = $request->gebouw_uuid;
         $gebouw->save();
-        return redirect(route('management'));
+        return redirect(route('dashboard.overview'));
     }
 
     /**
@@ -81,15 +81,21 @@ class GebouwenController extends Controller
         //
     }
 
+    public function delete() {
+        $gebouwen = Gebouw::get();
+        return view('gebouwen.delete')->with(compact('gebouwen'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Gebouw::destroy($request->gebouw_id);
+        return redirect(route('dashboard.overview'));
     }
 
     /**

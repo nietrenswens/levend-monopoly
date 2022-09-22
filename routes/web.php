@@ -25,13 +25,29 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
         return view('dashboard');
     })->name('index');
 
-    Route::get('/management/', [ManagementController::class, 'index'])->name('management');
+    Route::get('management', [ManagementController::class, 'index'])->name('management');
 
-    Route::get('/overview', [ManagementController::class, 'overview'])->name('overview');
+    Route::get('overview', [ManagementController::class, 'overview'])->name('overview');
 
-    Route::resource('/users', UsersController::class);
+    Route::controller(UsersController::class)->name('users.')->group(function() {
+        Route::get('users/create', 'create')->name('create');
+        Route::get('users/delete', 'delete')->name('delete');
 
-    Route::resource('/gebouwen', GebouwenController::class);
+        Route::post('users/store', 'store')->name('store');
+        Route::post('users/destroy', 'destroy')->name('destroy');
+    });
+
+    // Route::post('users')
+    // Route::resource('/users', UsersController::class);
+    // Route::get('/users/delete', [UsersController::class, 'delete'])->name('users.delete');
+
+    Route::controller(GebouwenController::class)->name('gebouwen.')->group(function() {
+        Route::get('gebouwen/create', 'create')->name('create');
+        Route::get('gebouwen/delete', 'delete')->name('delete');
+
+        Route::post('gebouwen/store', 'store')->name('store');
+        Route::post('gebouwen/destroy', 'destroy')->name('destroy');
+    });
 });
 
 require __DIR__.'/auth.php';

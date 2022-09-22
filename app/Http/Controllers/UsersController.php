@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Gebouw;
 use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
@@ -44,7 +45,7 @@ class UsersController extends Controller
         $user->password = Hash::make($request->user_wachtwoord);
         $user->role = "gebruiker";
         $user->save();
-        return redirect(route('management'));
+        return redirect(route('dashboard.management'));
     }
 
     /**
@@ -81,14 +82,32 @@ class UsersController extends Controller
         //
     }
 
+    private function detachFromModels($id) {
+        $gebouwen = Gebouw::where('user_id', $id);
+        $gebouwen->update(['user_id'=>null]);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->user_id;
+        if($id == 1) return redirect(route('dashboard.overview'));
+
+        # Zoek gebouwen en onteigen ze.
+        $this->detachFromModels($id);
+
+        User::destroy($id);
+        return redirect(route('dashboard.overview'));
+    }
+
+    public function delete()
+    {
+        $users = User::get();
+        return view('users.delete')->with(compact('users'));
     }
 }
