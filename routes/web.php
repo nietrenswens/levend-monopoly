@@ -20,6 +20,8 @@ Route::get('/', function () {
     return view('index');
 })->middleware(['guest']);
 
+Route::get('buy/{id}', [GebouwenController::class, 'buy'])->middleware(['auth'])->name('buy');
+
 Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function() {
     Route::get('/', function() {
         return view('dashboard');

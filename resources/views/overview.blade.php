@@ -5,6 +5,14 @@
         </h2>
     </x-slot>
 
+    @if (Session::get('error'))
+        <div class="md:w-2/6 w-full text-white mx-auto mt-2 bg-red-400 p-6">{{ Session::get('error') }}</div>
+    @endif
+
+    @if (Session::get('success'))
+        <div class="md:w-2/6 w-full text-white mx-auto mt-2 bg-green-400 p-6">{{ Session::get('success') }}</div>
+    @endif
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

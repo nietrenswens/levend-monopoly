@@ -12,10 +12,6 @@
                     <form action="{{ route('dashboard.users.store') }}" method="POST">
                         @csrf
                         <div class="mb-6">
-                            <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                            <input name="user_email" type="text" id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-                        </div>
-                        <div class="mb-6">
                             <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900">Gebruikersnaam</label>
                             <input name="user_naam" type="text" id="base-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                         </div>
