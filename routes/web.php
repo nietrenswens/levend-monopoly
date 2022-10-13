@@ -20,8 +20,8 @@ Route::get('/', function () {
     return view('index');
 })->middleware(['guest']);
 
-Route::get('buy/{uuid}', [GebouwenController::class, 'buy'])->middleware(['auth'])->name('buy');
-Route::get('buybuilding/{uuid}/{belasting}', [GebouwenController::class, 'buybuilding'])->middleware(['auth'])->name('buybuilding');
+Route::get('buy/{gebouw}', [GebouwenController::class, 'buy'])->middleware(['auth'])->name('buy');
+Route::get('buybuilding/{gebouw}/{belasting}', [GebouwenController::class, 'buybuilding'])->middleware(['auth'])->name('buybuilding');
 
 Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function() {
     Route::get('/', function() {
@@ -38,10 +38,10 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
         Route::controller(UsersController::class)->name('users.')->group(function() {
             Route::get('users/create', 'create')->name('create');
             Route::get('users/delete', 'delete')->name('delete');
-            Route::get('users/edit/{id}', 'edit')->name('edit');
+            Route::get('users/edit/{user}', 'edit')->name('edit');
             Route::get('users/askedit', 'askedit')->name('askedit');
 
-            Route::post('users/update/{id}', 'update')->name('update');
+            Route::post('users/update/{user}', 'update')->name('update');
             Route::post('users/store', 'store')->name('store');
             Route::post('users/destroy', 'destroy')->name('destroy');
         });

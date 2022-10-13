@@ -115,44 +115,65 @@ class GebouwenController extends Controller
     /**
      * Buys the building.
      *
-     * @param  int  $id
+     * @param  Gebouw  $gebouw
+     * @param bool $belasting
      * @return \Illuminate\Http\Response
      */
-    public function buyBuilding($uuid, $belasting) {
-        $gebouw = Gebouw::where('uuid', $uuid)->first();
-        # Check if building even exists
-        if(!$gebouw) return redirect(route('dashboard.overview'))->with(['error'=>'Dat gebouw kan je niet kopen.']);
+    public function buyBuilding(Gebouw $gebouw, bool $belasting) {
+        // $gebouw = Gebouw::where('uuid', $uuid)->first();
+        // Check if building even exists
+        if(!$gebouw) {
+            return redirect(route('dashboard.overview'))->with(['error'=>'Dat gebouw kan je niet kopen.']);
+        }
+
+        // Checks if building is already owned by user
         if($gebouw->user_id) {
+            // Checks if building is owned by the user
             if($gebouw->user_id == auth()->user()->id) {
                 return redirect(route('dashboard.overview'))->with(['error'=>'Je hebt dit gebouw al gekocht.']);
             }
             $huur = $gebouw->prijs * 0.4;
-            $gebouw->user->saldo += $huur;
-            $gebouw->user->save();
-            auth()->user()->saldo -= $huur;
-            auth()->user()->save();
+
+            $gebouw->user->update([
+                'saldo' => $gebouw->user->saldo + $huur
+            ]);
+
+            auth()->user()->update([
+                'saldo' => auth()->user()->saldo - $huur
+            ]);
+
             return redirect(route('dashboard.overview'))->with(['error'=>'Dat gebouw is al gekocht. Je hebt ' . $huur . ' euro betaald voor het huren van het gebouw.']);
         }
+
+        // Checks if user has enough money
         if(auth()->user()->saldo < $gebouw->prijs) {
             return redirect(route('dashboard.overview'))->with(['error'=>'Je hebt niet genoeg geld om dit gebouw te kopen.']);
         }
 
-        # Buy the building
+        // Buy the building
         if($belasting){
             $belasting = $gebouw->prijs * 0.21;
-            auth()->user()->saldo -= ($belasting + $gebouw->prijs);
-            auth()->user()->save();
-            $gebouw->belasting = true;
-            $gebouw->user_id = auth()->user()->id;
-            $gebouw->save();
+            
+            auth()->user()->update([
+                'saldo' => auth()->user()->saldo - ($belasting + $gebouw->prijs)
+            ]);
+
+            $gebouw->update([
+                'belasting' => true,
+                'user_id' => auth()->user()->id
+            ]);
             return redirect(route('dashboard.overview'))->with(['success'=>'Je hebt het gebouw ' . $gebouw->naam . ' gekocht voor ' . $gebouw->prijs . ' euro. Je hebt ' . $belasting . ' euro aan belasting betaald.']);
-            // return redirect(route('dashboard.overview'))->with(['success'=>'Je hebt het gebouw ' . $gebouw->naam . ' gekocht met belasting.']);
         }
-        # Todo: I am convinced that there must be a better way...
-        auth()->user()->saldo -= $gebouw->prijs;
-        auth()->user()->save();
-        $gebouw->user_id = auth()->user()->id;
-        $gebouw->save();
+
+        // Todo: I am convinced that there must be a better way...
+        auth()->user()->update([
+            'saldo' => auth()->user()->saldo - $gebouw->prijs
+        ]);
+
+        $gebouw->update([
+            'user_id' => auth()->user()->id
+        ]);
+
         return redirect(route('dashboard.overview'))->with(['success'=>'Je hebt het gebouw ' . $gebouw->naam . ' gekocht.']);
     }
 

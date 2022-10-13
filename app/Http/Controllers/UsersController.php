@@ -71,12 +71,12 @@ class UsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        return view('users.edit', ['user' => User::find($id)]);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -95,19 +95,19 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $user = User::find($id);
         // dd($user);
-        $user->name = $request->user_naam;
-        $user->role = $request->user_role;
-        if ($request->user_wachtwoord != null and $request->user_wachtwoord != "") {
-            $user->password = Hash::make($request->user_wachtwoord);
-        }
-        $user->save();
+        $user->update([
+            'name' => $request->user_naam,
+            'role' => $request->user_role,
+            'password' => $request->user_wachtwoord != null && $request->user_wachtwoord != ""
+                  ? Hash::make($request->user_wachtwoord)
+                  : $user->password
+        ]);
         return redirect(route('dashboard.overview'))->with(['success'=>'Het team genaamd ' . $request->user_naam . ' is aangepast.']);
     }
 
@@ -119,13 +119,11 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Request $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
-        if(!auth()->user()->role == 'admin') # Deze methode is slecht en sloom, maar ik weet nu even niks beters.
-            return redirect(route('login'));
         $id = $request->user_id;
         if($id == 1) return redirect(route('dashboard.overview'));
 
@@ -140,8 +138,6 @@ class UsersController extends Controller
 
     public function delete()
     {
-        if(!auth()->user()->role == 'admin') # Deze methode is slecht en sloom, maar ik weet nu even niks beters.
-            return redirect(route('login'));
         $users = User::get();
         return view('users.delete')->with(compact('users'));
     }

@@ -8,9 +8,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Gebouw extends Model
 {
+    use HasFactory;
 
     protected $table = 'gebouwen';
-    use HasFactory;
+
+    protected $fillable = [
+        'naam',
+        'prijs',
+        'uuid',
+        'user_id'
+    ];
+
+    protected $casts = [
+        'belasting' => 'boolean'
+    ];
+
+    public function getRouteKeyName() {
+        return 'uuid';
+    }
 
     public function user() {
         return $this->belongsTo(User::class);

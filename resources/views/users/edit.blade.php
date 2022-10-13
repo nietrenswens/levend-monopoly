@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     {{-- {{ route('dashboard.users.update', ['user' => $user->id]) }} --}}
-                    <form action="{{ route('dashboard.users.update', ['id'=>$user->id]) }}" method="POST">
+                    <form action="{{ route('dashboard.users.update', compact('user')) }}" method="POST">
                         @csrf
                         <div class="mb-6">
                             <label for="base-input" class="block mb-2 text-sm font-medium text-gray-900">Gebruikersnaam</label>
