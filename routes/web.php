@@ -33,7 +33,7 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
     Route::get('overview', [ManagementController::class, 'overview'])->name('overview');
 
 
-    # Admin Routes
+    // Admin Routes
     Route::group(['middleware' => ['is_admin']], function() {
         Route::controller(UsersController::class)->name('users.')->group(function() {
             Route::get('users/create', 'create')->name('create');
@@ -49,7 +49,10 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
         Route::controller(GebouwenController::class)->name('gebouwen.')->group(function() {
             Route::get('gebouwen/create', 'create')->name('create');
             Route::get('gebouwen/delete', 'delete')->name('delete');
-    
+            Route::get('gebouwen/edit/{gebouw}', 'edit')->name('edit');
+            Route::get('gebouwen/askedit', 'askedit')->name('askedit');
+
+            Route::post('gebouwen/update/{gebouw}', 'update')->name('update');
             Route::post('gebouwen/store', 'store')->name('store');
             Route::post('gebouwen/destroy', 'destroy')->name('destroy');
         });

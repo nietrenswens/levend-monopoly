@@ -16,7 +16,8 @@ class Gebouw extends Model
         'naam',
         'prijs',
         'uuid',
-        'user_id'
+        'user_id',
+        'belasting',
     ];
 
     protected $casts = [
