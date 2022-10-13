@@ -76,7 +76,19 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('users.edit', ['user' => User::find($id)]);
+    }
+
+    /**
+     * Asks the user which user they want to edit
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function askedit()
+    {
+        $users = User::all();
+        return view('users.askedit', compact('users'));
     }
 
     /**
@@ -88,7 +100,15 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        // dd($user);
+        $user->name = $request->user_naam;
+        $user->role = $request->user_role;
+        if ($request->user_wachtwoord != null and $request->user_wachtwoord != "") {
+            $user->password = Hash::make($request->user_wachtwoord);
+        }
+        $user->save();
+        return redirect(route('dashboard.overview'))->with(['success'=>'Het team genaamd ' . $request->user_naam . ' is aangepast.']);
     }
 
     private function detachFromModels($id) {

@@ -15,8 +15,6 @@ class GebouwenController extends Controller
      */
     public function index()
     {
-        if(!auth()->user()->role == 'admin') # Deze methode is slecht en sloom, maar ik weet nu even niks beters.
-            return redirect(route('login'));
         return view('gebouwen');
     }
 
@@ -27,8 +25,6 @@ class GebouwenController extends Controller
      */
     public function create()
     {
-        if(!auth()->user()->role == 'admin') # Deze methode is slecht en sloom, maar ik weet nu even niks beters.
-            return redirect(route('login'));
         return view('gebouwen.create');
     }
 
@@ -40,8 +36,6 @@ class GebouwenController extends Controller
      */
     public function store(Request $request)
     {
-        if(!auth()->user()->role == 'admin') # Deze methode is slecht en sloom, maar ik weet nu even niks beters.
-            return redirect(route('login'));
         $gebouw = new Gebouw;
         $gebouw->naam = $request->gebouw_naam;
         $gebouw->prijs = $request->gebouw_prijs;
@@ -88,8 +82,6 @@ class GebouwenController extends Controller
     }
 
     public function delete() {
-        if(!auth()->user()->role == 'admin') # Deze methode is slecht en sloom, maar ik weet nu even niks beters.
-            return redirect(route('login'));
         $gebouwen = Gebouw::get();
         return view('gebouwen.delete')->with(compact('gebouwen'));
     }
@@ -102,23 +94,66 @@ class GebouwenController extends Controller
      */
     public function destroy(Request $request)
     {
-        if(!auth()->user()->role == 'admin') # Deze methode is slecht en sloom, maar ik weet nu even niks beters.
-            return redirect(route('login'));
         Gebouw::destroy($request->gebouw_id);
         return redirect(route('dashboard.overview'))->with(['success'=>'Het gebouw is verwijderd.']);
     }
 
     /**
-     * Koop een gebouw
+     * Shows the buy page.
      *
-     * @param  int  $id
+     * @param  uuid $uuid
      * @return \Illuminate\Http\Response
      */
     public function buy($uuid)
     {
         $gebouw = Gebouw::where('uuid', $uuid)->first();
         if(!$gebouw) return redirect(route('dashboard.overview'))->with(['error'=>'Dat gebouw kan je niet kopen']);
+        if($gebouw->user_id == auth()->user()->id) return redirect(route('dashboard.overview'))->with(['error'=>'Je kan je eigen gebouwen niet kopen.']);
         return view('buy')->with(compact('gebouw'));
+    }
+
+    /**
+     * Buys the building.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function buyBuilding($uuid, $belasting) {
+        $gebouw = Gebouw::where('uuid', $uuid)->first();
+        # Check if building even exists
+        if(!$gebouw) return redirect(route('dashboard.overview'))->with(['error'=>'Dat gebouw kan je niet kopen.']);
+        if($gebouw->user_id) {
+            if($gebouw->user_id == auth()->user()->id) {
+                return redirect(route('dashboard.overview'))->with(['error'=>'Je hebt dit gebouw al gekocht.']);
+            }
+            $huur = $gebouw->prijs * 0.4;
+            $gebouw->user->saldo += $huur;
+            $gebouw->user->save();
+            auth()->user()->saldo -= $huur;
+            auth()->user()->save();
+            return redirect(route('dashboard.overview'))->with(['error'=>'Dat gebouw is al gekocht. Je hebt ' . $huur . ' euro betaald voor het huren van het gebouw.']);
+        }
+        if(auth()->user()->saldo < $gebouw->prijs) {
+            return redirect(route('dashboard.overview'))->with(['error'=>'Je hebt niet genoeg geld om dit gebouw te kopen.']);
+        }
+
+        # Buy the building
+        if($belasting){
+            $belasting = $gebouw->prijs * 0.21;
+            auth()->user()->saldo -= ($belasting + $gebouw->prijs);
+            auth()->user()->save();
+            $gebouw->belasting = true;
+            $gebouw->user_id = auth()->user()->id;
+            $gebouw->save();
+            return redirect(route('dashboard.overview'))->with(['success'=>'Je hebt het gebouw ' . $gebouw->naam . ' gekocht voor ' . $gebouw->prijs . ' euro. Je hebt ' . $belasting . ' euro aan belasting betaald.']);
+            // return redirect(route('dashboard.overview'))->with(['success'=>'Je hebt het gebouw ' . $gebouw->naam . ' gekocht met belasting.']);
+        }
+        # Todo: I am convinced that there must be a better way...
+        auth()->user()->saldo -= $gebouw->prijs;
+        auth()->user()->save();
+        $gebouw->user_id = auth()->user()->id;
+        $gebouw->save();
+        return redirect(route('dashboard.overview'))->with(['success'=>'Je hebt het gebouw ' . $gebouw->naam . ' gekocht.']);
     }
 
 }
