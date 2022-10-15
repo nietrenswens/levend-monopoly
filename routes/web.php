@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\GebouwenController;
+use App\Http\Controllers\StartcodesController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::get('/', function () {
 
 Route::get('buy/{gebouw}', [GebouwenController::class, 'buy'])->middleware(['auth'])->name('buy');
 Route::get('buybuilding/{gebouw}/{belasting}', [GebouwenController::class, 'buybuilding'])->middleware(['auth'])->name('buybuilding');
+Route::get('startcode/{code}', [StartcodesController::class, 'claimStartcode'])->middleware(['auth'])->name('claimStartcode');
 
 Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function() {
     Route::get('/', function() {
@@ -55,6 +57,14 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
             Route::post('gebouwen/update/{gebouw}', 'update')->name('update');
             Route::post('gebouwen/store', 'store')->name('store');
             Route::post('gebouwen/destroy', 'destroy')->name('destroy');
+        });
+
+        Route::controller(StartcodesController::class)->name('startcodes.')->group(function() {
+            Route::get('startcodes/create', 'create')->name('create');
+            Route::get('startcodes/delete', 'delete')->name('delete');
+
+            Route::post('startcodes/create', 'store')->name('store');
+            Route::post('startcodes/destroy', 'destroy')->name('destroy');
         });
     });
 

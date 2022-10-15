@@ -54,6 +54,10 @@ class User extends Authenticatable
         // return false;
      }
 
+     public function startcodes() {
+         return $this->belongsToMany(Startcode::class, 'startcodes_users', 'user_id', 'startcode_id');
+     }
+
      public function waarde(){
         $gebouwen = $this->gebouwen;
         $waarde = 0;

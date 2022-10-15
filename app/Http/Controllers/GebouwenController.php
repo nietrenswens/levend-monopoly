@@ -45,7 +45,7 @@ class GebouwenController extends Controller
         else
             $gebouw->uuid = $request->gebouw_uuid;
         $gebouw->save();
-        return redirect(route('dashboard.overview'))->with(['success' => 'Het gebouw ' . $gebouw->naam . ' is aangemaakt.']);
+        return redirect(route('dashboard.management'))->with(['success' => 'Het gebouw ' . $gebouw->naam . ' is aangemaakt.']);
     }
 
     /**
@@ -74,7 +74,7 @@ class GebouwenController extends Controller
     public function destroy(Request $request)
     {
         Gebouw::destroy($request->gebouw_id);
-        return redirect(route('dashboard.overview'))->with(['success' => 'Het gebouw is verwijderd.']);
+        return redirect(route('dashboard.management'))->with(['success' => 'Het gebouw is verwijderd.']);
     }
 
     /**
@@ -196,7 +196,7 @@ class GebouwenController extends Controller
             'user_id'=> $request->gebouw_owner_id,
         ]);
 //        dd($request);
-        return redirect(route('dashboard.overview'))->with(['success' => 'Het gebouw is aangepast.']);
+        return redirect(route('dashboard.management'))->with(['success' => 'Het gebouw is aangepast.']);
     }
 
 }

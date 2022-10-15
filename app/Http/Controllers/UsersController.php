@@ -43,18 +43,16 @@ class UsersController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-        if(!auth()->user()->role == 'admin') # Deze methode is slecht en sloom, maar ik weet nu even niks beters.
-            return redirect(route('login'));
         $user = new User;
         $user->name = $request->user_naam;
         $user->password = Hash::make($request->user_wachtwoord);
         $user->role = "gebruiker";
         $user->save();
-        return redirect(route('dashboard.overview'))->with(['success'=>'Het team genaamd ' . $request->user_naam . ' is aangemaakt.']);
+        return redirect(route('dashboard.management'))->with(['success'=>'Het team genaamd ' . $request->user_naam . ' is aangemaakt.']);
     }
 
     /**
@@ -72,7 +70,7 @@ class UsersController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(User $user)
     {
@@ -83,7 +81,7 @@ class UsersController extends Controller
      * Asks the user which user they want to edit
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function askedit()
     {
@@ -96,7 +94,7 @@ class UsersController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update(Request $request, User $user)
     {
@@ -108,7 +106,7 @@ class UsersController extends Controller
                   ? Hash::make($request->user_wachtwoord)
                   : $user->password
         ]);
-        return redirect(route('dashboard.overview'))->with(['success'=>'Het team genaamd ' . $request->user_naam . ' is aangepast.']);
+        return redirect(route('dashboard.management'))->with(['success'=>'Het team genaamd ' . $request->user_naam . ' is aangepast.']);
     }
 
     private function detachFromModels($id) {
@@ -120,7 +118,7 @@ class UsersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(Request $request)
     {
@@ -133,7 +131,7 @@ class UsersController extends Controller
         $gebouwen->update(['user_id'=>null]);
 
         User::destroy($id);
-        return redirect(route('dashboard.overview'))->with(['success'=>'Het team is verwijderd.']);
+        return redirect(route('dashboard.management'))->with(['success'=>'Het team is verwijderd.']);
     }
 
     public function delete()
