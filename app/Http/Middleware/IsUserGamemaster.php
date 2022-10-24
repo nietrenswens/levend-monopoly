@@ -1,10 +1,10 @@
 <?php
- 
+
 namespace App\Http\Middleware;
- 
+
 use Closure;
- 
-class IsUserAdmin
+
+class IsUserGamemaster
 {
     /**
      * Handle an incoming request.
@@ -15,9 +15,9 @@ class IsUserAdmin
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->user()->role == 'gamemaster' )
+        if(auth()->user()->role == 'gamemaster' or auth()->user()->role == 'admin')
             return $next($request);
-        
+
         return redirect(route('login'));
     }
 }

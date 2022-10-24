@@ -3,6 +3,7 @@
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\GebouwenController;
 use App\Http\Controllers\StartcodesController;
+use App\Http\Controllers\TaxController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,14 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
 
     Route::get('overview', [ManagementController::class, 'overview'])->name('overview');
 
+
+    // Gamemaster Routes
+    Route::group(['middleware' => ['is_gamemaster']], function() {
+       Route::controller((TaxController::class))->name('tax.')->group(function() {
+           Route::get('tax', [TaxController::class, 'index'])->name('index');
+           Route::get('tax/manage/{user}', [TaxController::class, 'manage'])->name('manage');
+       });
+    });
 
     // Admin Routes
     Route::group(['middleware' => ['is_admin']], function() {
