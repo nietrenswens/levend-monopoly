@@ -55,7 +55,7 @@ class User extends Authenticatable
      }
 
      public function isGamemaster() {
-        return $this->role == 'gamemaster';
+        return $this->role == 'gamemaster' or $this->role == 'admin';
         // return false;
      }
 

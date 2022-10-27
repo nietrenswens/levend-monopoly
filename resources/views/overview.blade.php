@@ -46,7 +46,7 @@
                                                 &euro; {{ $gebouw->prijs }}
                                             </td>
                                             <td class="py-4 px-6">
-                                                @if(!Auth::user()->isAdministrator() or !Auth::user()->isGamemaster())
+                                                @if(!Auth::user()->isAdministrator() || !Auth::user()->isGamemaster())
                                                     @if (Auth::user()->id == $gebouw->user_id)
                                                         <span class="text-green-400">Ik!</span>
                                                     @else

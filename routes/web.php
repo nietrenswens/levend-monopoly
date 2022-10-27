@@ -41,6 +41,8 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
        Route::controller((TaxController::class))->name('tax.')->group(function() {
            Route::get('tax', [TaxController::class, 'index'])->name('index');
            Route::get('tax/manage/{user}', [TaxController::class, 'manage'])->name('manage');
+
+           Route::post('tax/take', [TaxController::class, 'removeBuildingFromTeam'])->name('take');
        });
     });
 
