@@ -23,8 +23,10 @@ Route::get('/', function () {
 })->middleware(['guest']);
 
 Route::get('buy/{gebouw}', [GebouwenController::class, 'buy'])->middleware(['auth'])->name('buy');
-Route::get('buybuilding/{gebouw}/{belasting}', [GebouwenController::class, 'buybuilding'])->middleware(['auth'])->name('buybuilding');
-Route::get('startcode/{code}', [StartcodesController::class, 'claimStartcode'])->middleware(['auth'])->name('claimStartcode');
+Route::get('buybuilding/{gebouw}/{belasting}', [GebouwenController::class, 'buybuilding'])->middleware(['auth'])
+    ->name('buybuilding');
+Route::get('startcode/{code}', [StartcodesController::class, 'claimStartcode'])->middleware(['auth'])
+    ->name('claimStartcode');
 
 Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function() {
     Route::get('/', function() {
