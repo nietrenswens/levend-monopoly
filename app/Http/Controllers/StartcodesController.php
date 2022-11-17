@@ -14,7 +14,7 @@ class StartcodesController extends Controller
      * @param Startcode $startcode
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function claimStartcode($startcode) {
+    public function claimStartcode(Startcode $startcode) {
         $user = auth()->user();
         $code = Startcode::where('code', $startcode)->first();
         if(!$code) {

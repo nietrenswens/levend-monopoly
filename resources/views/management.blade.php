@@ -19,16 +19,16 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="grid sm:grid-cols-3 grid-cols-1 gap-y-4 sm:gap-x-8 text-center">
 
-                        <a class="bg-blue-400 p-8 sm:block sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.users.create') }}">Voeg een team toe</a>
-                        <a class="bg-red-400 p-8 sm:block text-white font-semibold text-lg" href="{{ route('dashboard.users.delete') }}">Verwijder een team</a>
-                        <a class="bg-green-400 p-8 sm:block text-white font-semibold text-lg" href="{{ route('dashboard.users.askedit') }}">Wijzig een team</a>
+                        <a class="bg-blue-400 p-8 sm:block sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.users.create') }}"><i class="fa fa-users"></i> Voeg een team toe</a>
+                        <a class="bg-red-400 p-8 sm:block text-white font-semibold text-lg" href="{{ route('dashboard.users.delete') }}"><i class="fa fa-users"></i> Verwijder een team</a>
+                        <a class="bg-green-400 p-8 sm:block text-white font-semibold text-lg" href="{{ route('dashboard.users.askedit') }}"><i class="fa fa-users"></i> Wijzig een team</a>
 
-                        <a class="bg-blue-400 p-8 sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.gebouwen.create') }}" href="#">Voeg een gebouw toe</a>
-                        <a class="bg-red-400 p-8 sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.gebouwen.delete') }}">Verwijder een gebouw</a>
-                        <a class="bg-green-400 p-8 sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.gebouwen.askedit') }}">Wijzig een gebouw</a>
+                        <a class="bg-blue-400 p-8 sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.gebouwen.create') }}" href="#"><i class="fa fa-home"></i> Voeg een gebouw toe</a>
+                        <a class="bg-red-400 p-8 sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.gebouwen.delete') }}"><i class="fa fa-home"></i> Verwijder een gebouw</a>
+                        <a class="bg-green-400 p-8 sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.gebouwen.askedit') }}"><i class="fa fa-home"></i> Wijzig een gebouw</a>
 
-                        <a class="bg-blue-400 p-8 sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.startcodes.create') }}" href="#">Voeg een startcode toe</a>
-                        <a class="bg-red-400 p-8 sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.startcodes.delete') }}">Verwijder een startcode</a>
+                        <a class="bg-blue-400 p-8 sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.startcodes.create') }}" href="#"><i class="fa fa-play"></i> Voeg een startcode toe</a>
+                        <a class="bg-red-400 p-8 sm:w-full text-white font-semibold text-lg" href="{{ route('dashboard.startcodes.delete') }}"><i class="fa fa-play"></i> Verwijder een startcode</a>
                     </div>
                 </div>
             </div>

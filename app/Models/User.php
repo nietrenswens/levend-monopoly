@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Gebouw;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -72,4 +73,29 @@ class User extends Authenticatable
         $waarde += $this->saldo;
         return $waarde;
      }
+
+     public function getRank() {
+        $users = User::where('role', '=', 'gebruiker')->get();
+        $users = $users->sortByDesc(function($user) {
+            return $user->waarde();
+        });
+        $rank = 1;
+        foreach($users as $user) {
+            if($user->id == $this->id) {
+                return $rank;
+            }
+            $rank++;
+        }
+        return 0;
+     }
+
+     public function numBuildings() {
+        return $this->gebouwen()->count();
+     }
+
+     public function numChancecards() {
+        $kanskaarten = DB::table('used_chancecards')->where('user_id', '=', $this->id)->get();
+        return $kanskaarten->count();
+     }
+
 }

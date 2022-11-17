@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChanceController;
 use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\GebouwenController;
 use App\Http\Controllers\StartcodesController;
@@ -27,9 +28,7 @@ Route::get('buybuilding/{gebouw}/{belasting}', [GebouwenController::class, 'buyb
 Route::get('startcode/{code}', [StartcodesController::class, 'claimStartcode'])->middleware(['auth'])->name('claimStartcode');
 
 Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(function() {
-    Route::get('/', function() {
-        return view('dashboard');
-    })->name('index');
+    Route::get('/', [ManagementController::class, 'dashboard'])->name('index');
 
     Route::get('management', [ManagementController::class, 'index'])->name('management');
 
@@ -43,6 +42,11 @@ Route::middleware(['auth'])->prefix('dashboard')->name('dashboard.')->group(func
            Route::get('tax/manage/{user}', [TaxController::class, 'manage'])->name('manage');
 
            Route::post('tax/take', [TaxController::class, 'removeBuildingFromTeam'])->name('take');
+       });
+
+       Route::controller((ChanceController::class))->name('chance.')->group(function() {
+           Route::get('chance', [ChanceController::class, 'index'])->name('index');
+           Route::get('chance/take/{user}', [ChanceController::class, 'take'])->name('take');
        });
     });
 

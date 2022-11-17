@@ -27,6 +27,11 @@
                             Belastingdienst
                         </x-nav-link>
                     @endif
+                    @if (auth()->user()->isAdministrator() or auth()->user()->isGamemaster())
+                        <x-nav-link :href="route('dashboard.chance.index')" :active="request()->routeIs('dashboard.tax.index')">
+                            Kanskaarten
+                        </x-nav-link>
+                    @endif
                     <x-nav-link :href="route('dashboard.overview')" :active="request()->routeIs('dashboard.overview')">
                         Spel overzicht
                     </x-nav-link>
@@ -90,6 +95,11 @@
             @if(auth()->user()->isAdministrator() or auth()->user()->isGamemaster()))
             <x-responsive-nav-link :href="route('dashboard.tax.index')" :active="request()->routeIs('dashboard.tax.index')">
                 Belastingdienst
+            </x-responsive-nav-link>
+            @endif
+            @if(auth()->user()->isAdministrator() or auth()->user()->isGamemaster()))
+            <x-responsive-nav-link :href="route('dashboard.chance.index')" :active="request()->routeIs('dashboard.tax.index')">
+                Kanskaarten
             </x-responsive-nav-link>
             @endif
             <x-responsive-nav-link :href="route('dashboard.overview')" :active="request()->routeIs('dashboard.overview')">
