@@ -11,7 +11,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h2 class="text-4xl font-bold">Welkom '{{ Auth::user()->name }}' bij levendmonopoly</h2>
                     @if(Auth::user()->role == 'gebruiker')
-                        <h2 class="text-3xl text-center pt-12">Statistieken</h2>
+                        <h2 class="text-3xl text-left pt-12">Statistieken</h2>
                         <div class="md:grid grid-cols-3 gap-x-8 pt-4">
                             <div class="text-center bg-lime-400 p-12 mb-8 md:mb-0 rounded-3xl text-white">
                                 <h3 class="text-2xl pb-4 font-bold">Rang</h3>
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                     @elseif(Auth::user()->role == 'admin' or Auth::user()->role == 'gamemaster')
-                        <h2 class="text-3xl text-center pt-12">Statistieken</h2>
+                        <h2 class="text-3xl pl-4 pt-12">Statistieken</h2>
                         <div class="md:grid grid-cols-3 gap-x-8 pt-4">
                             <div class="text-center bg-lime-400 p-12 mb-8 md:mb-0 rounded-3xl text-white">
                                 <h3 class="text-2xl pb-4 font-bold">Teams</h3>
